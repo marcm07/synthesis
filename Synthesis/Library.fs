@@ -41,11 +41,18 @@ let digits x =
         |false -> digitcount (x/10) (acc+1) 
     digitcount x 0
 
-let minmax (_,_,_,_) = 
+let minmax tuple = 
+    let a,b,c,d = tuple
+    (min (min a b) (min c d), max (max a b) (max c d))
+
     
 
-let isLeap _ =
-    failwith "Not implemented"
+let isLeap x =
+    if (x<1582) then failwith "input year less than 1582" else 
+        if (x % 4 = 0 && x%100 <> 0) then 
+            true
+        else
+            if (x%400 = 0) then true else false
 
 let month _ =
     failwith "Not implemented"
