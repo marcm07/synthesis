@@ -1,5 +1,9 @@
 ﻿module Synthesis
 
+open System.Diagnostics.Tracing
+open System.Xml.Linq
+open System.Xml.Linq
+
 let abelar x = 
     (x>12 && x<3097 && x % 12 = 0) 
 
@@ -56,27 +60,40 @@ let isLeap x =
                 |false -> false
                    
 
-let month x =
-       match x with
+let month  = function
        |1 -> "January", 31
        |2 -> "February", 28
        |3 -> "March",31
        |4 -> "April",30
-       |5 -> 
-       |6 ->
-       |7 ->
-       |8 ->
-       |9 ->
-       |10 ->
-       |11 ->
-       |12 ->
-       |_ -> 
+       |5 -> "May", 31
+       |6 -> "June", 30
+       |7 -> "July", 31
+       |8 -> "August", 31
+       |9 -> "September", 30
+       |10 -> "October", 31
+       |11 -> "November", 30
+       |12 -> "December", 31
+       |_ -> failwith "Month out of bounds"
 
-let toBinary _ =
-    failwith "Not implemented"
+let toBinary x = 
+    match x < 0 with
+    |true -> failwith "Not implemented"
+    |false -> 
+        let rec binary x stringbuild =
+            match x=0 || x=1 with
+            |true -> string(x) + stringbuild
+            |false -> binary (x/2) (string(x%2) + stringbuild)  
+        binary x ""
 
-let bizFuzz _ =
-    failwith "Not implemented"
+let bizFuzz n =
+    let rec loop n count t =
+        match n<=count with
+        |true -> (0,0,0)
+        |false -> 
+            match count%3=0 && count%5=0 with
+            |true -> (0,0,p+=1)
+    loop n 0 (0,0,0)
+
 
 let monthDay _ _ =
     failwith "Not implemented"
