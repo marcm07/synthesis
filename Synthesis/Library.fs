@@ -1,38 +1,39 @@
 ﻿module Synthesis
 
 let abelar x = 
-    if x>12 && x<3097 && x % 12 = 0 then true else false
+    (x>12 && x<3097 && x % 12 = 0) 
 
 let area b h =
-    if b<0.0 || h<0.0 then 
-        failwith "Negative base or height"
-    else 0.5*b*h
+    match b<0.0 || h<0.0 with 
+    |true -> failwith "Negative base or height"
+    |false -> 0.5*b*h
         
 
 let zollo x =
-    if (x<0) then -1*x
-    else x*2
+    match (x<0) with 
+    |true -> -1*x
+    |false -> x*2
 
 
 let min x y =
-    if x<y then x
-    else y
+    match x<y with 
+    |true -> x
+    |false -> y
 
 let max x y =
-    if x<y then y
-    else x
+    match x<y with 
+    |true -> y
+    |false -> x
 
 let ofTime h m s =
     (h*60*60)+(m*60)+s
 
 let toTime s =
-    if s<0 then 0,0,0
-    else
-        let hours = 
-            s/(60*60)
-        let mins = 
-            (s-(hours*60*60))/60
-        hours,mins,s%60
+    let hours = s/(60*60)
+    let mins = (s-(hours*60*60))/60
+    match s<=0 with 
+    |true -> 0,0,0
+    |false -> hours,mins,s%60
 
 let digits x =
     let rec digitcount x acc =
@@ -48,14 +49,28 @@ let minmax tuple =
     
 
 let isLeap x =
-    if (x<1582) then failwith "input year less than 1582" else 
-        if (x % 4 = 0 && x%100 <> 0) then 
-            true
-        else
-            if (x%400 = 0) then true else false
+    match (x<1582) with
+    |true -> failwith "input year less than 1582" 
+    |false-> match (x % 4 = 0 && (x%100 <> 0 || x%400=0)) with
+                |true -> true
+                |false -> false
+                   
 
-let month _ =
-    failwith "Not implemented"
+let month x =
+       match x with
+       |1 -> "January", 31
+       |2 -> "February", 28
+       |3 -> "March",31
+       |4 -> "April",30
+       |5 -> 
+       |6 ->
+       |7 ->
+       |8 ->
+       |9 ->
+       |10 ->
+       |11 ->
+       |12 ->
+       |_ -> 
 
 let toBinary _ =
     failwith "Not implemented"
