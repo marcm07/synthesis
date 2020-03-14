@@ -86,17 +86,42 @@ let toBinary x =
         binary x ""
 
 let bizFuzz n =
-    let rec loop n count t =
-        match n<=count with
-        |true -> (0,0,0)
+    let rec loop n count (x,y,z) =
+        match n>count with
+        |true -> (x,y,z)
         |false -> 
             match count%3=0 && count%5=0 with
-            |true -> (0,0,p+=1)
-    loop n 0 (0,0,0)
+            |true -> loop n (count+1) (x,y,z+1)
+            |false -> 
+                match count%3=0 with
+                |true -> loop n (count+1) (x+1,y,z)
+                |false -> 
+                    match count%5 = 0 with 
+                    |true -> loop n (count + 1) (x,y+1,z)
+                    |false -> loop n (count+1) (x,y,z)
+    loop n 1 (0,0,0)
 
 
-let monthDay _ _ =
-    failwith "Not implemented"
+let monthDay d y =
+    match y < 1582 || d > 366 || d=0 || (d=366 && isLeap y = false) with
+    |true -> failwith "year or days out of bounds or is not a leap year"
+    |false ->  
+        let rec findmonth d sum current_month =
+            let a,p = month(current_month)
+            match isLeap y = true && current_month = 2 with
+            |true -> 
+                let sum = sum + p + 1
+                match d>sum with
+                |true -> findmonth d sum  (current_month+1)
+                |false -> a
+            |false -> 
+                let sum = sum + p 
+                match d>sum with
+                |true -> findmonth d sum  (current_month+1)
+                |false -> a
+        findmonth d 0 1
+ 
+                    
 
 let coord _ =
     failwith "Not implemented"
