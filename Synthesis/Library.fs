@@ -87,7 +87,7 @@ let toBinary x =
 
 let bizFuzz n =
     let rec loop n count (x,y,z) =
-        match n>count with
+        match n>=count with
         |true -> (x,y,z)
         |false -> 
             match count%3=0 && count%5=0 with
